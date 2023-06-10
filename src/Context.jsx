@@ -3,14 +3,20 @@ import { createContext } from "react";
 import { useReducer } from "react";
 import reducer from "./reducer";
 
-import { SET_LOADING, FETCH_DATA } from "./actions";
+import {
+  SET_LOADING,
+  FETCH_DATA,
+  REMOVE_DATA,
+  HANDLE_SEARCH,
+  HANDLE_PAGE,
+} from "./actions";
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
 const AppContext = createContext();
 const initialState = {
   isLoading: true,
   hits: [],
-  query: "react",
+  query: "",
   page: 0,
   nbPages: 0,
 };
@@ -33,11 +39,24 @@ function AppProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchData(API_ENDPOINT);
-  }, []);
+    fetchData(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
+  }, [state.query, state.page]);
 
+  const removeData = (id) => {
+    dispatch({ type: REMOVE_DATA, payload: id });
+  };
+  const handleSearch = (query) => {
+    dispatch({ type: HANDLE_SEARCH, payload: query });
+  };
+  const handlePage = (value) => {
+    dispatch({ type: HANDLE_PAGE, payload: value });
+  };
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <AppContext.Provider
+      value={{ ...state, removeData, handleSearch, handlePage }}
+    >
+      {children}
+    </AppContext.Provider>
   );
 }
 
