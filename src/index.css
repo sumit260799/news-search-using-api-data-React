@@ -10,6 +10,11 @@
 body {
   background-color: #f1f5f8;
 }
+@media screen and (max-width: 600px) {
+  .myForm {
+    text-align: center;
+  }
+}
 .loader {
   width: 70px;
   height: 70px;
@@ -19,7 +24,7 @@ body {
   transform: rotate(45deg);
   box-sizing: border-box;
   margin: auto;
-  margin-top: 10rem;
+  margin-top: 6rem;
 }
 .loader::before {
   content: "";
@@ -27,7 +32,7 @@ body {
   box-sizing: border-box;
   inset: -10px;
   border-radius: 50%;
-  border: 10px solid #ff3d00;
+  border: 10px solid #54a9e9;
   animation: prixClipFix 2s infinite linear;
 }
 
